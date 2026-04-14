@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ build.name }} — PC-NEST{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="card p-4">
+      <h4 class="fw-bold mb-1">{{ build.name }}</h4>
+      <small class="text-muted">{{ build.user.username }} · {{ build.created_at|date:"d.m.Y" }}</small>
+
+      {% if errors %}
+      <div class="alert alert-warning mt-3">
+        <h6 class="fw-bold"><i class="bi bi-exclamation-triangle"></i> Проблеми сумісності</h6>
+        <ul class="mb-0">
+          {% for error in errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% else %}
+      <div class="alert alert-success mt-3">
+        <i class="bi bi-check-circle"></i> Всі компоненти сумісні
+      </div>
+      {% endif %}
+
+      <hr>
+      <h6 class="fw-bold mb-3">Компоненти</h6>
+      <table class="table table-sm">
+        <thead class="table-light">
+          <tr><th>Тип</th><th>Компонент</th><th class="text-end">Ціна</th></tr>
+        </thead>
+        <tbody>
+          {% for bc in build.build_components.all %}
+          <tr>
+            <td><span class="badge bg-secondary">{{ bc.component.get_type_display }}</span></td>
+            <td>
+              <a href="{% url 'catalog:detail' bc.component.pk %}">
+                {{ bc.component.brand }} {{ bc.component.name }}
+              </a>
+            </td>
+            <td class="text-end">{{ bc.component.price }} грн</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="fw-bold">
+            <td colspan="2">Загалом</td>
+            <td class="text-end text-primary">{{ total_price }} грн</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card p-3 mb-3">
+      <h6 class="fw-bold mb-2">Поділитись</h6>
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control" id="shareUrl"
+               value="{{ request.scheme }}://{{ request.get_host }}{% url 'builds:detail' build.slug %}"
+               readonly>
+        <button type="button" id="copyShareUrlBtn" class="btn btn-outline-secondary">
+          Копіювати
+        </button>
+      </div>
+    </div>
+
+    {% if user == build.user %}
+    <form method="post" action="{% url 'builds:delete' build.slug %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-danger w-100"
+              onclick="return confirm('Видалити збірку?')">
+        <i class="bi bi-trash"></i> Видалити збірку
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/build-detail.js' %}"></script>
+{% endblock %}

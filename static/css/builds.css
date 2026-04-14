@@ -1,0 +1,226 @@
+.builder-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 320px;
+  gap: 1.25rem;
+}
+
+.builder-shell {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.92));
+  border: 1px solid rgba(216, 227, 242, 0.9);
+  border-radius: 22px;
+  padding: 0.75rem 1.25rem 1.5rem;
+  box-shadow: 0 18px 40px rgba(17, 38, 76, 0.12);
+}
+
+.builder-header {
+  position: sticky;
+  top: 64px;
+  z-index: 30;
+  background: rgba(248, 251, 255, 0.96);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid rgba(216, 227, 242, 0.9);
+  box-shadow: 0 8px 16px rgba(17, 38, 76, 0.08);
+  margin-bottom: 1.25rem;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 320px;
+  gap: 1rem;
+}
+
+.builder-header-spacer {
+  display: none;
+}
+
+.builder-header-main {
+  min-width: 0;
+}
+
+.builder-header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.builder-header .title {
+  font-weight: 800;
+  margin: 0;
+}
+
+.builder-header .subtitle {
+  margin: 0;
+  color: #5f728f;
+}
+
+.builder-header .controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.builder-header input {
+  min-width: 220px;
+}
+
+.builder-sidebar {
+  position: sticky;
+  top: 150px;
+  align-self: start;
+  background: linear-gradient(180deg, #0f1d2f, #1b2b43);
+  color: #d6e7ff;
+  border-radius: 16px;
+  padding: 1rem 0.75rem;
+  height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+.builder-sidebar h6 {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: #a7c4f7;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.builder-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: calc(100vh - 190px);
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.builder-nav button {
+  text-align: left;
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #d6e7ff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.builder-nav button.active,
+.builder-nav button:hover {
+  background: rgba(46, 133, 255, 0.15);
+  border-color: rgba(46, 133, 255, 0.35);
+  color: #ffffff;
+}
+
+.builder-center {
+  min-width: 0;
+  padding-top: 0.25rem;
+}
+
+.builder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.builder-card {
+  border-radius: 16px;
+  border: 1px solid #d8e3f2;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.builder-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  background: #f4f8fd;
+  padding: 0.75rem;
+}
+
+.builder-card .content {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.builder-card .price {
+  font-weight: 800;
+  color: #1b2b43;
+}
+
+.builder-card .pick {
+  margin-top: auto;
+}
+
+.builder-summary {
+  position: sticky;
+  top: 150px;
+  align-self: start;
+  background: #ffffff;
+  border: 1px solid #d8e3f2;
+  border-radius: 16px;
+  padding: 1rem;
+  min-height: 220px;
+}
+
+.builder-summary h5 {
+  font-weight: 800;
+}
+
+.builder-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.builder-summary li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  border-bottom: 1px dashed #d8e3f2;
+  padding: 0.35rem 0;
+}
+
+.builder-total {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-top: 0.75rem;
+}
+
+.builder-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 1200px) {
+  .builder-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .builder-header {
+    position: static;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .builder-header-actions {
+    justify-content: flex-start;
+  }
+
+  .builder-sidebar,
+  .builder-summary {
+    position: static;
+    height: auto;
+  }
+
+  .builder-nav {
+    max-height: none;
+  }
+}

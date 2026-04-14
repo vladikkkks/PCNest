@@ -1,0 +1,131 @@
+.catalog-layout {
+  align-items: flex-start;
+}
+
+.filters-sticky {
+  position: sticky;
+  top: 96px;
+  align-self: flex-start;
+}
+
+.filters-card {
+  max-height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+.filters-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.section-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: #5f728f;
+  margin: 1rem 0 0.5rem;
+}
+
+.filter-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #1b2b43;
+}
+
+.filters-scroll {
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.filters-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filters-scroll::-webkit-scrollbar-thumb {
+  background: #c9d8ee;
+  border-radius: 8px;
+}
+
+.catalog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.catalog-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0;
+  color: #1b2b43;
+}
+
+.catalog-sub {
+  font-size: 0.9rem;
+  color: #5f728f;
+}
+
+.sort-select {
+  max-width: 220px;
+}
+
+.component-card {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #d8e3f2;
+  height: 100%;
+}
+
+.component-media {
+  height: 180px;
+  background: #f4f8fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.component-media img {
+  max-height: 150px;
+  width: 100%;
+  object-fit: contain;
+}
+
+.component-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1b2b43;
+}
+
+.component-meta {
+  font-size: 0.83rem;
+  color: #5f728f;
+}
+
+.component-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1f365a;
+}
+
+.btn-add {
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.pagination .page-link {
+  border-radius: 10px;
+  border: 1px solid #d8e3f2;
+  color: #1b2b43;
+  margin: 0 0.15rem;
+}
+
+.pagination .page-item.active .page-link {
+  background: #2e85ff;
+  border-color: #2e85ff;
+}
