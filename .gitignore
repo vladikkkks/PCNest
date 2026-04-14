@@ -3,8 +3,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.sqlite3
-db.sqlite3
 
 # Virtual environments
 .venv/
@@ -24,6 +22,5 @@ staticfiles/
 
 # OS / Editor
 .DS_Store
-Thumbs.db
 .vscode/
 *.swp
