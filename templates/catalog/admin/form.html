@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ action }} компонент — PC-NEST{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card p-4">
+      <h4 class="fw-bold mb-4">{{ action }} компонент</h4>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h6 class="text-muted mb-3 border-bottom pb-2">Основна інформація</h6>
+        {{ form|crispy }}
+        <h6 class="text-muted mb-3 border-bottom pb-2 mt-4">Розширені характеристики</h6>
+        {{ spec_form|crispy }}
+        <div class="d-flex gap-2 mt-4">
+          <button type="submit" class="btn btn-dark">{{ action }}</button>
+          <a href="{% url 'catalog:admin_list' %}" class="btn btn-outline-secondary">Скасувати</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

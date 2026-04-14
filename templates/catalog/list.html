@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Каталог — PC-NEST{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/catalog.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="row g-4 catalog-layout">
+  <div class="col-lg-3">
+    <div class="filters-sticky">
+      <div class="card p-3 filters-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="filters-title mb-0">Фільтр комплектуючих</h5>
+        <a href="{% url 'catalog:list' %}" class="small">Очистити</a>
+      </div>
+
+      <form method="get" class="mt-2 filters-scroll">
+        <div>
+          <label class="section-label">Пошук</label>
+          <input type="text" name="q" value="{{ search }}" class="form-control form-control-sm" placeholder="Назва або бренд">
+        </div>
+
+        <label class="section-label">Категорія</label>
+        <label class="filter-line">
+          <input class="form-check-input mt-0" type="radio" name="type" value="" {% if not current_type %}checked{% endif %}>
+          <span>Усі</span>
+        </label>
+        {% for value, label in component_types %}
+        <label class="filter-line">
+          <input class="form-check-input mt-0" type="radio" name="type" value="{{ value }}" {% if current_type == value %}checked{% endif %}>
+          <span>{{ label }}</span>
+        </label>
+        {% endfor %}
+
+        <label class="section-label">Бренд</label>
+        {% for brand in brands %}
+        <label class="filter-line">
+          <input class="form-check-input mt-0" type="checkbox" name="brand" value="{{ brand }}" {% if brand in current_brands %}checked{% endif %}>
+          <span>{{ brand }}</span>
+        </label>
+        {% endfor %}
+
+        <label class="section-label">Ціна (грн)</label>
+        <div class="row g-2 mb-2">
+          <div class="col">
+            <input type="number" name="price_min" value="{{ price_min }}" class="form-control form-control-sm" placeholder="5000">
+          </div>
+          <div class="col">
+            <input type="number" name="price_max" value="{{ price_max }}" class="form-control form-control-sm" placeholder="50000">
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-sm w-100 mt-2">Застосувати фільтри</button>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-9">
+    <div class="catalog-head">
+      <div>
+        <h1 class="catalog-title">
+          {% if current_type %}
+            {{ components.0.get_type_display|default:"Каталог" }}
+          {% else %}
+            Каталог комплектуючих
+          {% endif %}
+        </h1>
+        <div class="catalog-sub">Знайдено: {{ components.paginator.count }} позицій</div>
+      </div>
+
+      <form method="get" class="sort-select">
+        <input type="hidden" name="q" value="{{ search }}">
+        <input type="hidden" name="type" value="{{ current_type }}">
+        {% for b in current_brands %}
+        <input type="hidden" name="brand" value="{{ b }}">
+        {% endfor %}
+        <input type="hidden" name="price_min" value="{{ price_min }}">
+        <input type="hidden" name="price_max" value="{{ price_max }}">
+        <select name="sort" class="form-select" onchange="this.form.submit()">
+          <option value="price" {% if current_sort == 'price' %}selected{% endif %}>Від найдешевших</option>
+          <option value="-price" {% if current_sort == '-price' %}selected{% endif %}>Від найдорожчих</option>
+          <option value="name" {% if current_sort == 'name' %}selected{% endif %}>Назва А-Я</option>
+          <option value="-name" {% if current_sort == '-name' %}selected{% endif %}>Назва Я-А</option>
+        </select>
+      </form>
+    </div>
+
+    {% if components %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+      {% for component in components %}
+      <div class="col">
+        <div class="card component-card">
+          <a href="{% url 'catalog:detail' component.pk %}" class="text-decoration-none">
+            <div class="component-media">
+              {% if component.image %}
+              <img src="{{ component.image.url }}" alt="{{ component.brand }} {{ component.name }}">
+              {% else %}
+              <img src="{% static 'img/components/' %}{{ component.type }}.svg" alt="{{ component.get_type_display }}">
+              {% endif %}
+            </div>
+          </a>
+          <div class="p-3 d-flex flex-column">
+            <div class="component-name">{{ component.brand }} {{ component.name }}</div>
+            <div class="component-meta mt-1">
+              {% if component.socket %}Socket {{ component.socket }}{% endif %}
+              {% if component.ram_type %}
+              {% if component.socket %} • {% endif %}
+              {{ component.ram_type|upper }}
+              {% endif %}
+              {% if component.wattage %}
+              {% if component.socket or component.ram_type %} • {% endif %}
+              {{ component.wattage }}W
+              {% endif %}
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div class="component-price">{{ component.price }} ₴</div>
+              {% if user.is_authenticated %}
+              <a href="{% url 'builds:create' %}?add={{ component.pk }}" class="btn btn-outline-primary btn-sm btn-add">Додати</a>
+              {% else %}
+              <a href="{% url 'accounts:login' %}?next={% url 'builds:create' %}" class="btn btn-outline-primary btn-sm btn-add">Додати</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if components.has_other_pages %}
+    <nav class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if components.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ components.previous_page_number }}&type={{ current_type }}&sort={{ current_sort }}&q={{ search }}&price_min={{ price_min }}&price_max={{ price_max }}{% for b in current_brands %}&brand={{ b|urlencode }}{% endfor %}">‹</a>
+        </li>
+        {% endif %}
+        {% for num in components.paginator.page_range %}
+        <li class="page-item {% if components.number == num %}active{% endif %}">
+          <a class="page-link" href="?page={{ num }}&type={{ current_type }}&sort={{ current_sort }}&q={{ search }}&price_min={{ price_min }}&price_max={{ price_max }}{% for b in current_brands %}&brand={{ b|urlencode }}{% endfor %}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        {% if components.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ components.next_page_number }}&type={{ current_type }}&sort={{ current_sort }}&q={{ search }}&price_min={{ price_min }}&price_max={{ price_max }}{% for b in current_brands %}&brand={{ b|urlencode }}{% endfor %}">›</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+    {% else %}
+    <div class="card p-5 text-center">
+      <i class="bi bi-search fs-1 text-muted"></i>
+      <p class="mt-2 text-muted mb-0">Нічого не знайдено. Спробуйте змінити фільтри.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
