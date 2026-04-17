@@ -7,6 +7,7 @@ class ComponentForm(forms.ModelForm):
         model = Component
         fields = [
             'name', 'type', 'brand', 'price', 'image',
+            'image_alt',
             'socket', 'ram_type', 'wattage', 'description',
         ]
 

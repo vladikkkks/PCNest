@@ -21,6 +21,10 @@ class Component(models.Model):
     brand   = models.CharField(max_length=100)
     price   = models.DecimalField(max_digits=10, decimal_places=2)
     image   = models.ImageField(upload_to='components/', blank=True, null=True)
+    image_alt = models.CharField(max_length=255, blank=True)
+    image_source = models.URLField(blank=True)
+    has_real_photo = models.BooleanField(default=False)
+    image_updated_at = models.DateTimeField(blank=True, null=True)
 
     # Поля для перевірки сумісності
     socket   = models.CharField(max_length=50, blank=True)   # для CPU і Motherboard
@@ -32,9 +36,24 @@ class Component(models.Model):
 
     class Meta:
         ordering = ['type', 'brand', 'name']
+        indexes = [
+            models.Index(fields=['type']),
+            models.Index(fields=['brand']),
+            models.Index(fields=['price']),
+        ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['type', 'brand', 'name'],
+                name='catalog_component_unique_type_brand_name',
+            ),
+        ]
 
     def __str__(self):
         return f'{self.brand} {self.name}'
+
+    @property
+    def resolved_image_alt(self):
+        return self.image_alt or f'{self.brand} {self.name}'
 
 
 class ComponentSpec(models.Model):

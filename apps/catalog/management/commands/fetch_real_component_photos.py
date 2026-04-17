@@ -7,53 +7,54 @@ from urllib.request import Request, urlopen
 
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 from apps.catalog.models import Component
 
 
 WIKIMEDIA_FILES_BY_TYPE = {
     "cpu": [
-        "Cpu_1.jpg",
-        "Cpu.jpg",
+        {"file": "Cpu_1.jpg", "alt": "Фото процесора"},
+        {"file": "Cpu.jpg", "alt": "Фото процесора"},
     ],
     "cpu_amd": [
-        "AMD_CPU_(49325505733).jpg",
-        "AMD_Ryzen_5_2600_(39851733273).jpg",
+        {"file": "AMD_CPU_(49325505733).jpg", "alt": "Фото процесора AMD"},
+        {"file": "AMD_Ryzen_5_2600_(39851733273).jpg", "alt": "Фото процесора AMD Ryzen"},
     ],
     "cpu_intel": [
-        "IMG3186_-_Intel_CPU.jpg",
-        "CPU-INTEL-CORE.jpg",
-        "Cpu.jpg",
+        {"file": "IMG3186_-_Intel_CPU.jpg", "alt": "Фото процесора Intel"},
+        {"file": "CPU-INTEL-CORE.jpg", "alt": "Фото процесора Intel Core"},
+        {"file": "Cpu.jpg", "alt": "Фото процесора Intel"},
     ],
     "motherboard": [
-        "Computer-motherboard.jpg",
+        {"file": "Computer-motherboard.jpg", "alt": "Фото материнської плати"},
     ],
     "ram": [
-        "DDR5_SDRAM_IMGP6295_smial_wp.jpg",
-        "RAM_Module_(SDRAM-DDR4).jpg",
+        {"file": "DDR5_SDRAM_IMGP6295_smial_wp.jpg", "alt": "Фото модуля оперативної пам'яті DDR5"},
+        {"file": "RAM_Module_(SDRAM-DDR4).jpg", "alt": "Фото модуля оперативної пам'яті DDR4"},
     ],
     "gpu": [
-        "Graphic_card.jpg",
-        "Graphics_Card_(25600081191).jpg",
+        {"file": "Graphic_card.jpg", "alt": "Фото відеокарти"},
+        {"file": "Graphics_Card_(25600081191).jpg", "alt": "Фото дискретної відеокарти"},
     ],
     "psu": [
-        "Power_supply.JPG",
-        "ATX_Computer_power_supply_unit.jpg",
+        {"file": "Power_supply.JPG", "alt": "Фото блока живлення"},
+        {"file": "ATX_Computer_power_supply_unit.jpg", "alt": "Фото ATX блока живлення"},
     ],
     "storage": [
-        "WesterDigital-Black-NVMe-SSD.jpg",
+        {"file": "WesterDigital-Black-NVMe-SSD.jpg", "alt": "Фото NVMe SSD накопичувача"},
     ],
     "case": [
-        "Computer_case_-_Full_Tower.jpg",
-        "Computer_Case_(CM).jpg",
-        "Computer_case_with_power_supply.JPG",
+        {"file": "Computer_case_-_Full_Tower.jpg", "alt": "Фото корпуса ПК"},
+        {"file": "Computer_Case_(CM).jpg", "alt": "Фото комп'ютерного корпуса"},
+        {"file": "Computer_case_with_power_supply.JPG", "alt": "Фото корпуса з блоком живлення"},
     ],
     "cooler": [
-        "Fan_cooler_CPU.jpg",
-        "CPU_fan_and_heatsink.jpg",
-        "CPU_Heat_Sink_(5066575382).jpg",
-        "CPU_Heat_Sink_(5066574708).jpg",
-        "CPU_copper_heat_sink.jpg",
+        {"file": "Fan_cooler_CPU.jpg", "alt": "Фото кулера для процесора"},
+        {"file": "CPU_fan_and_heatsink.jpg", "alt": "Фото кулера з радіатором"},
+        {"file": "CPU_Heat_Sink_(5066575382).jpg", "alt": "Фото процесорного радіатора"},
+        {"file": "CPU_Heat_Sink_(5066574708).jpg", "alt": "Фото процесорного радіатора"},
+        {"file": "CPU_copper_heat_sink.jpg", "alt": "Фото мідного радіатора процесора"},
     ],
 }
 
@@ -92,7 +93,8 @@ class Command(BaseCommand):
             if not pool:
                 skipped += 1
                 continue
-            file_name = random.choice(pool)
+            photo = random.choice(pool)
+            file_name = photo["file"]
 
             source_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{quote(file_name)}"
             target_name = f"{component.type}_{component.pk}{Path(file_name).suffix.lower()}"
@@ -107,7 +109,18 @@ class Command(BaseCommand):
                 with urlopen(request, timeout=30) as response:
                     image_bytes = response.read()
 
-                component.image.save(target_name, ContentFile(image_bytes), save=True)
+                component.image.save(target_name, ContentFile(image_bytes), save=False)
+                component.image_source = source_url
+                component.image_alt = component.image_alt or f'{component.brand} {component.name} - {photo["alt"]}'
+                component.has_real_photo = True
+                component.image_updated_at = timezone.now()
+                component.save(update_fields=[
+                    "image",
+                    "image_source",
+                    "image_alt",
+                    "has_real_photo",
+                    "image_updated_at",
+                ])
                 updated += 1
                 self.stdout.write(self.style.SUCCESS(f"[OK] {component} -> {target_name}"))
             except Exception as exc:

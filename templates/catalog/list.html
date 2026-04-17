@@ -96,9 +96,9 @@
           <a href="{% url 'catalog:detail' component.pk %}" class="text-decoration-none">
             <div class="component-media">
               {% if component.image %}
-              <img src="{{ component.image.url }}" alt="{{ component.brand }} {{ component.name }}">
+              <img src="{{ component.image.url }}" alt="{{ component.resolved_image_alt }}">
               {% else %}
-              <img src="{% static 'img/components/' %}{{ component.type }}.svg" alt="{{ component.get_type_display }}">
+              <img src="{% static 'img/components/' %}{{ component.type }}.svg" alt="{{ component.resolved_image_alt }}">
               {% endif %}
             </div>
           </a>

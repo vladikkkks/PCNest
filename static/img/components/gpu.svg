@@ -1,7 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220">
-  <rect width="360" height="220" fill="#eef4fb"/>
-  <rect x="45" y="70" width="270" height="80" rx="12" fill="#1b2b43"/>
-  <circle cx="120" cy="110" r="24" fill="#2e85ff"/>
-  <circle cx="240" cy="110" r="24" fill="#2e85ff"/>
-  <text x="180" y="205" text-anchor="middle" font-size="22" font-family="Arial" fill="#1b2b43">GPU</text>
+<svg width="240" height="180" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="180" rx="28" fill="#F7EFEF"/>
+  <rect x="20" y="24" width="200" height="132" rx="24" fill="url(#bg)"/>
+  <rect x="34" y="58" width="160" height="64" rx="18" fill="#7F1D1D"/>
+  <circle cx="84" cy="90" r="20" fill="#FCA5A5"/>
+  <circle cx="84" cy="90" r="10" fill="#FEE2E2"/>
+  <circle cx="134" cy="90" r="20" fill="#FCA5A5"/>
+  <circle cx="134" cy="90" r="10" fill="#FEE2E2"/>
+  <rect x="196" y="74" width="12" height="34" rx="4" fill="#FECACA"/>
+  <rect x="46" y="126" width="104" height="8" rx="4" fill="#FECACA"/>
+  <defs>
+    <linearGradient id="bg" x1="20" y1="24" x2="220" y2="156" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FEE2E2"/>
+      <stop offset="1" stop-color="#FCA5A5"/>
+    </linearGradient>
+  </defs>
 </svg>

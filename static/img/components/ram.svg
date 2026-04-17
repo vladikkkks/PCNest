@@ -1,9 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220">
-  <rect width="360" height="220" fill="#eef4fb"/>
-  <rect x="50" y="90" width="260" height="50" rx="10" fill="#2e85ff"/>
-  <rect x="70" y="102" width="32" height="20" fill="#ffffff"/>
-  <rect x="112" y="102" width="32" height="20" fill="#ffffff"/>
-  <rect x="154" y="102" width="32" height="20" fill="#ffffff"/>
-  <rect x="196" y="102" width="32" height="20" fill="#ffffff"/>
-  <text x="180" y="205" text-anchor="middle" font-size="22" font-family="Arial" fill="#1b2b43">RAM</text>
+<svg width="240" height="180" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="180" rx="28" fill="#EEF3FB"/>
+  <rect x="20" y="26" width="200" height="128" rx="24" fill="url(#bg)"/>
+  <rect x="38" y="68" width="164" height="44" rx="14" fill="#1D4ED8"/>
+  <rect x="52" y="80" width="22" height="20" rx="4" fill="#DBEAFE"/>
+  <rect x="80" y="80" width="22" height="20" rx="4" fill="#DBEAFE"/>
+  <rect x="108" y="80" width="22" height="20" rx="4" fill="#DBEAFE"/>
+  <rect x="136" y="80" width="22" height="20" rx="4" fill="#DBEAFE"/>
+  <rect x="164" y="80" width="22" height="20" rx="4" fill="#DBEAFE"/>
+  <g fill="#93C5FD">
+    <rect x="54" y="114" width="6" height="16" rx="3"/>
+    <rect x="72" y="114" width="6" height="16" rx="3"/>
+    <rect x="90" y="114" width="6" height="16" rx="3"/>
+    <rect x="108" y="114" width="6" height="16" rx="3"/>
+    <rect x="126" y="114" width="6" height="16" rx="3"/>
+    <rect x="144" y="114" width="6" height="16" rx="3"/>
+    <rect x="162" y="114" width="6" height="16" rx="3"/>
+    <rect x="180" y="114" width="6" height="16" rx="3"/>
+  </g>
+  <defs>
+    <linearGradient id="bg" x1="20" y1="26" x2="220" y2="154" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E0F2FE"/>
+      <stop offset="1" stop-color="#93C5FD"/>
+    </linearGradient>
+  </defs>
 </svg>

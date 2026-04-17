@@ -14,10 +14,16 @@
   <div class="col-md-4">
     <div class="card p-3 text-center">
       {% if component.image %}
-      <img src="{{ component.image.url }}" class="img-fluid" style="max-height:280px;object-fit:contain">
+      <img src="{{ component.image.url }}" alt="{{ component.resolved_image_alt }}" class="img-fluid" style="max-height:280px;object-fit:contain">
       {% else %}
       <div class="bg-light d-flex align-items-center justify-content-center p-3" style="height:280px">
-        <img src="{% static 'img/components/' %}{{ component.type }}.svg" alt="{{ component.get_type_display }}" class="img-fluid" style="max-height:240px;object-fit:contain">
+        <img src="{% static 'img/components/' %}{{ component.type }}.svg" alt="{{ component.resolved_image_alt }}" class="img-fluid" style="max-height:240px;object-fit:contain">
+      </div>
+      {% endif %}
+      {% if component.image_source %}
+      <div class="small text-muted mt-3">
+        Джерело зображення:
+        <a href="{{ component.image_source }}" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>
       </div>
       {% endif %}
     </div>
