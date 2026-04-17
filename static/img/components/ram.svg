@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220">
+  <rect width="360" height="220" fill="#eef4fb"/>
+  <rect x="50" y="90" width="260" height="50" rx="10" fill="#2e85ff"/>
+  <rect x="70" y="102" width="32" height="20" fill="#ffffff"/>
+  <rect x="112" y="102" width="32" height="20" fill="#ffffff"/>
+  <rect x="154" y="102" width="32" height="20" fill="#ffffff"/>
+  <rect x="196" y="102" width="32" height="20" fill="#ffffff"/>
+  <text x="180" y="205" text-anchor="middle" font-size="22" font-family="Arial" fill="#1b2b43">RAM</text>
+</svg>

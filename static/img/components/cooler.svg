@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220">
+  <rect width="360" height="220" fill="#eef4fb"/>
+  <circle cx="180" cy="105" r="54" fill="#2e85ff"/>
+  <circle cx="180" cy="105" r="14" fill="#fff"/>
+  <path d="M180 51 L194 95 L166 95 Z" fill="#fff"/>
+  <path d="M234 105 L190 119 L190 91 Z" fill="#fff"/>
+  <path d="M180 159 L166 115 L194 115 Z" fill="#fff"/>
+  <path d="M126 105 L170 91 L170 119 Z" fill="#fff"/>
+  <text x="180" y="205" text-anchor="middle" font-size="22" font-family="Arial" fill="#1b2b43">COOLER</text>
+</svg>

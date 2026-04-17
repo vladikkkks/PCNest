@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ build.name }} — PC-NEST{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="card p-4">
+      <h4 class="fw-bold mb-1">{{ build.name }}</h4>
+      <small class="text-muted">{{ build.user.username }} · {{ build.created_at|date:"d.m.Y" }}</small>
+
+      {% if errors %}
+      <div class="alert alert-warning mt-3">
+        <h6 class="fw-bold"><i class="bi bi-exclamation-triangle"></i> Проблеми сумісності</h6>
+        <ul class="mb-0">
+          {% for error in errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% else %}
+      <div class="alert alert-success mt-3">
+        <i class="bi bi-check-circle"></i> Всі компоненти сумісні
+      </div>
+      {% endif %}
+
+      <hr>
+      <h6 class="fw-bold mb-3">Компоненти</h6>
+      <table class="table table-sm">
+        <thead class="table-light">
+          <tr><th>Тип</th><th>Компонент</th><th class="text-end">Ціна</th></tr>
+        </thead>
+        <tbody>
+          {% for bc in build.build_components.all %}
+          <tr>
+            <td><span class="badge bg-secondary">{{ bc.component.get_type_display }}</span></td>
+            <td>
+              <a href="{% url 'catalog:detail' bc.component.pk %}">
+                {{ bc.component.brand }} {{ bc.component.name }}
+              </a>
+            </td>
+            <td class="text-end">{{ bc.component.price }} грн</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="fw-bold">
+            <td colspan="2">Загалом</td>
+            <td class="text-end text-primary">{{ total_price }} грн</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <!-- Лайк / Обране -->
+    <div class="card p-3 mb-3">
+      <h6 class="fw-bold mb-2">Обране</h6>
+      {% if user.is_authenticated %}
+        {% if user != build.user %}
+        <button id="likeBtn"
+                class="btn w-100 {% if user_liked %}btn-danger{% else %}btn-outline-danger{% endif %}"
+                data-url="{% url 'builds:toggle_like' build.slug %}"
+                data-csrf="{{ csrf_token }}">
+          <i class="bi {% if user_liked %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+          <span id="likeBtnText">{% if user_liked %}В обраному{% else %}Додати в обране{% endif %}</span>
+          <span class="badge bg-light text-dark ms-1" id="likesCount">{{ likes_count }}</span>
+        </button>
+        {% else %}
+        <div class="text-muted small">
+          <i class="bi bi-heart-fill text-danger"></i>
+          Збірку вподобали: <strong>{{ likes_count }}</strong>
+        </div>
+        {% endif %}
+      {% else %}
+      <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-outline-danger w-100">
+        <i class="bi bi-heart"></i> Увійдіть, щоб зберегти
+      </a>
+      {% endif %}
+    </div>
+
+    <!-- Поділитись -->
+    <div class="card p-3 mb-3">
+      <h6 class="fw-bold mb-2">Поділитись</h6>
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control" id="shareUrl"
+               value="{{ request.scheme }}://{{ request.get_host }}{% url 'builds:detail' build.slug %}"
+               readonly>
+        <button type="button" id="copyShareUrlBtn" class="btn btn-outline-secondary">
+          Копіювати
+        </button>
+      </div>
+    </div>
+
+    {% if user == build.user %}
+    <form method="post" action="{% url 'builds:delete' build.slug %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-danger w-100"
+              onclick="return confirm('Видалити збірку?')">
+        <i class="bi bi-trash"></i> Видалити збірку
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/build-detail.js' %}"></script>
+<script>
+(function () {
+  const btn = document.getElementById('likeBtn');
+  if (!btn) return;
+
+  btn.addEventListener('click', function () {
+    fetch(btn.dataset.url, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': btn.dataset.csrf,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+    .then(r => r.json())
+    .then(data => {
+      const icon = btn.querySelector('i');
+      const text = document.getElementById('likeBtnText');
+      const count = document.getElementById('likesCount');
+
+      if (data.liked) {
+        btn.classList.replace('btn-outline-danger', 'btn-danger');
+        icon.classList.replace('bi-heart', 'bi-heart-fill');
+        text.textContent = 'В обраному';
+      } else {
+        btn.classList.replace('btn-danger', 'btn-outline-danger');
+        icon.classList.replace('bi-heart-fill', 'bi-heart');
+        text.textContent = 'Додати в обране';
+      }
+      count.textContent = data.count;
+    });
+  });
+})();
+</script>
+{% endblock %}

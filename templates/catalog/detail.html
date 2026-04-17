@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ component.brand }} {{ component.name }} — PC-NEST{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'catalog:list' %}">Каталог</a></li>
+    <li class="breadcrumb-item active">{{ component.name }}</li>
+  </ol>
+</nav>
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card p-3 text-center">
+      {% if component.image %}
+      <img src="{{ component.image.url }}" class="img-fluid" style="max-height:280px;object-fit:contain">
+      {% else %}
+      <div class="bg-light d-flex align-items-center justify-content-center p-3" style="height:280px">
+        <img src="{% static 'img/components/' %}{{ component.type }}.svg" alt="{{ component.get_type_display }}" class="img-fluid" style="max-height:240px;object-fit:contain">
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card p-4">
+      <span class="badge bg-secondary mb-2">{{ component.get_type_display }}</span>
+      <h3 class="fw-bold">{{ component.brand }} {{ component.name }}</h3>
+      <h4 class="text-primary mb-3">{{ component.price }} грн</h4>
+
+      {% if component.description %}
+      <p class="text-muted">{{ component.description }}</p>
+      {% endif %}
+
+      <hr>
+      <h6 class="fw-bold">Характеристики</h6>
+      <table class="table table-sm table-borderless">
+        <tbody>
+          {% if component.socket %}
+          <tr><td class="text-muted" style="width:40%">Сокет</td><td>{{ component.socket }}</td></tr>
+          {% endif %}
+          {% if component.ram_type %}
+          <tr><td class="text-muted">Тип пам'яті</td><td>{{ component.ram_type|upper }}</td></tr>
+          {% endif %}
+          {% if component.wattage %}
+          <tr><td class="text-muted">Потужність</td><td>{{ component.wattage }} Вт</td></tr>
+          {% endif %}
+          {% if spec %}
+          {% if spec.manufacturer %}
+          <tr><td class="text-muted">Виробник</td><td>{{ spec.manufacturer }}</td></tr>
+          {% endif %}
+          {% if spec.release_year %}
+          <tr><td class="text-muted">Рік випуску</td><td>{{ spec.release_year }}</td></tr>
+          {% endif %}
+          {% if spec.warranty %}
+          <tr><td class="text-muted">Гарантія</td><td>{{ spec.warranty }} міс.</td></tr>
+          {% endif %}
+          {% for key, val in spec.extra.items %}
+          <tr><td class="text-muted">{{ key }}</td><td>{{ val }}</td></tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+
+      {% if user.is_authenticated %}
+      <a href="{% url 'builds:create' %}?add={{ component.pk }}" class="btn btn-dark mt-2">
+        <i class="bi bi-plus-lg"></i> Додати до збірки
+      </a>
+      {% else %}
+      <a href="{% url 'accounts:login' %}" class="btn btn-outline-dark mt-2">
+        Увійдіть, щоб додати до збірки
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
