@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC-NEST | Каталог</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                <span>PC-NEST</span>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Пошук комплектуючих...">
+            </div>
+
+            <nav class="nav-links">
+                <a href="#" class="active">Каталог</a>
+                <a href="#">Мої Збірки</a>
+                <button class="btn-primary">+ Створити ПК</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-layout">
+        
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <h2>Фільтр комплектуючих</h2>
+                <button class="btn-clear">Очистити</button>
+            </div>
+
+            <div class="filter-group">
+                <h3>Категорія</h3>
+                <label class="custom-checkbox">
+                    <input type="radio" name="category" checked>
+                    <span class="checkmark radio"></span>
+                    CPU (Процесори)
+                </label>
+                <label class="custom-checkbox">
+                    <input type="radio" name="category">
+                    <span class="checkmark radio"></span>
+                    GPU (Відеокарти)
+                </label>
+                <label class="custom-checkbox">
+                    <input type="radio" name="category">
+                    <span class="checkmark radio"></span>
+                    Motherboard (Плати)
+                </label>
+                <label class="custom-checkbox">
+                    <input type="radio" name="category">
+                    <span class="checkmark radio"></span>
+                    RAM (Пам'ять)
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h3>Бренд</h3>
+                <label class="custom-checkbox">
+                    <input type="checkbox" checked>
+                    <span class="checkmark"></span>
+                    Intel
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    AMD
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    NVIDIA
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                    ASUS
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h3>Ціна (грн)</h3>
+                <div class="price-inputs">
+                    <input type="number" placeholder="Від" value="5000">
+                    <span class="divider">-</span>
+                    <input type="number" placeholder="До" value="50000">
+                </div>
+                <button class="btn-apply">Застосувати фільтри</button>
+            </div>
+        </aside>
+
+        <section class="catalog">
+            <div class="catalog-top">
+                <h1>Процесори (CPU)</h1>
+                <div class="sort-wrapper">
+                    <span>Сортувати:</span>
+                    <select class="sort-select">
+                        <option>Від найдешевших</option>
+                        <option>Від найдорожчих</option>
+                        <option>За популярністю</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid">
+                
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://m.media-amazon.com/images/I/61b1MQfCgLL._AC_SL1250_.jpg" alt="Intel Core i9">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Intel Core i9-12900K</h3>
+                        <p class="card-specs">Socket 1700 • 16 ядер • 3.2 GHz</p>
+                        <div class="card-bottom">
+                            <span class="card-price">29 600 ₴</span>
+                            <button class="btn-add">Додати</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://m.media-amazon.com/images/I/61vGQNUEsGL._AC_SL1384_.jpg" alt="AMD Ryzen 7">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">AMD Ryzen 7 5800X</h3>
+                        <p class="card-specs">Socket AM4 • 8 ядер • 3.8 GHz</p>
+                        <div class="card-bottom">
+                            <span class="card-price">12 400 ₴</span>
+                            <button class="btn-add">Додати</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://m.media-amazon.com/images/I/81U28Ew8iLL._AC_SL1500_.jpg" alt="AMD GPU">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">AMD Radeon RX 6800</h3>
+                        <p class="card-specs">16GB GDDR6 • 256-bit • PCIe 4.0</p>
+                        <div class="card-bottom">
+                            <span class="card-price">39 900 ₴</span>
+                            <button class="btn-add">Додати</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://m.media-amazon.com/images/I/71R19E+HwSL._AC_SL1500_.jpg" alt="ASUS Motherboard">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">ASUS ROG Strix Z690-E</h3>
+                        <p class="card-specs">ATX • LGA 1700 • DDR5</p>
+                        <div class="card-bottom">
+                            <span class="card-price">18 200 ₴</span>
+                            <button class="btn-add">Додати</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://m.media-amazon.com/images/I/71u9BtzI0zL._AC_SL1500_.jpg" alt="Corsair RAM">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Corsair Vengeance 32GB</h3>
+                        <p class="card-specs">DDR5 • 5200MHz • 2x16GB</p>
+                        <div class="card-bottom">
+                            <span class="card-price">5 400 ₴</span>
+                            <button class="btn-add">Додати</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
