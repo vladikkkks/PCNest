@@ -60,3 +60,9 @@ DB_ENGINE=sqlite python manage.py fetch_real_component_photos
 ```bash
 DB_ENGINE=sqlite python manage.py fetch_real_component_photos --force
 ```
+
+Команда також заповнює службові поля компонента:
+- `image_alt`
+- `image_source`
+- `has_real_photo`
+- `image_updated_at`

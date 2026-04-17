@@ -42,9 +42,9 @@
           {% for component in components %}
           <div class="builder-card" data-component-type="{{ component.type }}">
             {% if component.image %}
-            <img src="{{ component.image.url }}" alt="{{ component.brand }} {{ component.name }}">
+            <img src="{{ component.image.url }}" alt="{{ component.resolved_image_alt }}">
             {% else %}
-            <img src="{% static 'img/components/' %}{{ component.type }}.svg" alt="{{ component.get_type_display }}">
+            <img src="{% static 'img/components/' %}{{ component.type }}.svg" alt="{{ component.resolved_image_alt }}">
             {% endif %}
             <div class="content">
               <div class="fw-bold">{{ component.brand }} {{ component.name }}</div>

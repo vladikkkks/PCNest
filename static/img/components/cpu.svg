@@ -1,6 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220">
-  <rect width="360" height="220" fill="#eef4fb"/>
-  <rect x="100" y="40" width="160" height="140" rx="16" fill="#2e85ff"/>
-  <rect x="125" y="65" width="110" height="90" rx="10" fill="#ffffff"/>
-  <text x="180" y="205" text-anchor="middle" font-size="22" font-family="Arial" fill="#1b2b43">CPU</text>
+<svg width="240" height="180" viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="180" rx="28" fill="#F3F0E8"/>
+  <rect x="18" y="18" width="204" height="144" rx="24" fill="url(#bg)"/>
+  <rect x="72" y="42" width="96" height="96" rx="18" fill="#1F2937"/>
+  <rect x="90" y="60" width="60" height="60" rx="12" fill="#F59E0B"/>
+  <rect x="102" y="72" width="36" height="36" rx="8" fill="#FFF7ED"/>
+  <g fill="#D1D5DB">
+    <rect x="56" y="54" width="10" height="12" rx="4"/>
+    <rect x="56" y="78" width="10" height="12" rx="4"/>
+    <rect x="56" y="102" width="10" height="12" rx="4"/>
+    <rect x="174" y="54" width="10" height="12" rx="4"/>
+    <rect x="174" y="78" width="10" height="12" rx="4"/>
+    <rect x="174" y="102" width="10" height="12" rx="4"/>
+    <rect x="90" y="26" width="12" height="10" rx="4"/>
+    <rect x="114" y="26" width="12" height="10" rx="4"/>
+    <rect x="138" y="26" width="12" height="10" rx="4"/>
+    <rect x="90" y="144" width="12" height="10" rx="4"/>
+    <rect x="114" y="144" width="12" height="10" rx="4"/>
+    <rect x="138" y="144" width="12" height="10" rx="4"/>
+  </g>
+  <defs>
+    <linearGradient id="bg" x1="18" y1="18" x2="222" y2="162" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF7ED"/>
+      <stop offset="1" stop-color="#FDE68A"/>
+    </linearGradient>
+  </defs>
 </svg>

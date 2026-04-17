@@ -9,7 +9,8 @@ class ComponentSpecInline(admin.StackedInline):
 
 @admin.register(Component)
 class ComponentAdmin(admin.ModelAdmin):
-    list_display  = ('name', 'type', 'brand', 'price', 'socket', 'ram_type', 'wattage')
+    list_display  = ('name', 'type', 'brand', 'price', 'has_real_photo', 'socket', 'ram_type', 'wattage')
     list_filter   = ('type', 'brand', 'ram_type')
     search_fields = ('name', 'brand')
+    readonly_fields = ('image_source', 'has_real_photo', 'image_updated_at')
     inlines       = [ComponentSpecInline]
